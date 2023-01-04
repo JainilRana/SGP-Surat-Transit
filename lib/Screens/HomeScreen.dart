@@ -20,9 +20,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   _HomeScreenState(this.stations_all);
 
-  //String text = "Select Location..";
-  late String selectedFrom;
-  late String selectedTo;
+  String selectedFrom = "Select Location..";
+  String selectedTo = "To..";
   @override
   @override
   Widget build(BuildContext context) {
@@ -131,6 +130,34 @@ class _HomeScreenState extends State<HomeScreen> {
                           //     selectedFrom = value as String;
                           //   }),
                           // ),
+                          Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: SizedBox(
+                                  width: 25,
+                                  child: Image.asset(
+                                      'assets/images/Animation.gif'),
+                                ),
+                              ),
+                              TextButton(
+                                  onPressed: null, child: Text(selectedFrom)),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: SizedBox(
+                                  width: 25,
+                                  child: Image.asset(
+                                      'assets/images/Animation-2.gif'),
+                                ),
+                              ),
+                              TextButton(
+                                  onPressed: null, child: Text(selectedTo)),
+                            ],
+                          ),
                           // DropdownButtonFormField(
                           //   isExpanded: true,
                           //   menuMaxHeight: 350,

@@ -40,9 +40,16 @@ class _CustomBottomState extends State<CustomBottom> {
                   Icons.route_outlined,
                 )),
             BottomNavigationBarItem(
-              icon: Icon(Icons.add_location_alt_sharp),
+              icon: ImageIcon(
+                AssetImage('assets/images/edit.png'),
+                size: 42,
+              ),
               label: "Plan",
-              activeIcon: Icon(Icons.add_location_alt_outlined),
+              activeIcon: ImageIcon(
+                AssetImage('assets/images/edit.png'),
+                color: Color.fromRGBO(35, 138, 250, 1),
+                size: 42,
+              ),
             ),
             BottomNavigationBarItem(
                 icon: Icon(Icons.explore_outlined), label: "Explore")
