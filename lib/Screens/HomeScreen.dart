@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:surat_transit/Screens/HomeScreenWidget/CustomBottombar.dart';
-import 'package:surat_transit/Screens/HomeScreenWidget/PopList.dart';
+
+import 'package:surat_transit/Screens/HomeScreenWidget/SelectCard.dart';
 
 class HomeScreen extends StatefulWidget {
   List<String> _stations;
@@ -17,7 +18,6 @@ class _HomeScreenState extends State<HomeScreen> {
   _HomeScreenState(this.stations_all);
 
   var selected_Station = ["Select Location..", "To.."];
-  var pop = [false, false, false];
 
   @override
   @override
@@ -84,74 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * .8,
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 6,
-                      ),
-                      Card(
-                        elevation: 8,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: SizedBox(
-                                    width: 25,
-                                    child: Image.asset(
-                                        'assets/images/Animation.gif'),
-                                  ),
-                                ),
-                                TextButton(
-                                    onPressed: (() {
-                                      setState(() {
-                                        pop[0] = !pop[0];
-                                        pop[1] = pop[0];
-                                      });
-                                    }),
-                                    child: Text(selected_Station[0])),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: SizedBox(
-                                    width: 25,
-                                    child: Image.asset(
-                                        'assets/images/Animation-2.gif'),
-                                  ),
-                                ),
-                                TextButton(
-                                  onPressed: (() {
-                                    setState(() {
-                                      pop[0] = !pop[0];
-                                      pop[2] = pop[0];
-                                    });
-                                  }),
-                                  child: SizedBox(
-                                    width: 220,
-                                    child: Text(
-                                      selected_Station[1],
-                                      overflow: TextOverflow.fade,
-                                      maxLines: 2,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                SelectedCard(stations_all, selected_Station),
                 Positioned(
                   top: MediaQuery.of(context).size.height * 0.25,
                   child: Container(
@@ -160,7 +93,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: OutlinedButton(
                       onPressed: (() {
                         print(selected_Station[0] + " " + selected_Station[1]);
-                        print(pop);
                       }),
                       // ignore: sort_child_properties_last
                       child: Padding(
@@ -189,7 +121,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
-        PopList(pop, selected_Station, stations_all)
       ]),
       bottomNavigationBar: Card(
         elevation: 20,
