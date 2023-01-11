@@ -48,7 +48,8 @@ class _SelectedCardState extends State<SelectedCard> {
                             constraints:
                                 BoxConstraints(maxWidth: double.infinity)),
                         dropdownDecoratorProps: const DropDownDecoratorProps(
-                          baseStyle: TextStyle(color: Colors.blue),
+                          baseStyle: TextStyle(
+                              color: Colors.blue, fontFamily: 'poppins'),
                           textAlignVertical: TextAlignVertical(y: 0.15),
                           dropdownSearchDecoration: InputDecoration(
                             border: InputBorder.none,
@@ -61,7 +62,8 @@ class _SelectedCardState extends State<SelectedCard> {
                           searchFieldProps: const TextFieldProps(
                             decoration: InputDecoration(
                               border: InputBorder.none,
-                              hintText: "Enter",
+                              hintText: "Search here...",
+                              hintStyle: TextStyle(color: Colors.blue),
                               contentPadding: EdgeInsets.all(8),
                             ),
                           ),
@@ -117,7 +119,8 @@ class _SelectedCardState extends State<SelectedCard> {
                           searchFieldProps: const TextFieldProps(
                             decoration: InputDecoration(
                               border: InputBorder.none,
-                              hintText: "Enter",
+                              hintText: "Search here...",
+                              hintStyle: TextStyle(color: Colors.blue),
                               contentPadding: EdgeInsets.all(8),
                             ),
                           ),

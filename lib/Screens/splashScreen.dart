@@ -3,8 +3,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'HomeScreen.dart';
-import 'package:surat_transit/Screens/HomeScreen.dart';
+import 'HomeScreenWidget/HomeScreen.dart';
+import 'NavigationScreen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -14,28 +14,34 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  late List<String> stations = [];
-  Future<void> ReadJson() async {
-    final String jsondata =
-        await rootBundle.loadString('lib/DATA/All_Stations-2.json');
-    final list = json.decode(jsondata);
-
-    for (var element in list) {
-      stations.add(element["all_station"]);
-    }
-  }
-
   @override
+  // late List<String> stations = [];
+  // late List<String> all_routes = [];
+  // Future<void> ReadJson() async {
+  //   final String jsondata =
+  //       await rootBundle.loadString('lib/DATA/All_Stations-2.json');
+  //   final list = json.decode(jsondata);
+  //   final String jsondata1 =
+  //       await rootBundle.loadString('lib/DATA/All_ROUTES.json');
+  //   final list1 = json.decode(jsondata1);
+  //   for (var element in list1) {
+  //     all_routes.add(element["all_routes"]);
+  //   }
+  //   for (var element in list) {
+  //     stations.add(element["all_station"]);
+  //   }
+  // }
+
+  // ignore: non_constant_identifier_names
   void initState() {
     // TODO: implement initState
-
-    ReadJson();
+    // ReadJson();
     super.initState();
     Timer(Duration(seconds: 7), (() {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: ((context) => HomeScreen(stations)),
+          builder: ((context) => NavigetScreen()),
         ),
       );
     }));
@@ -45,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Color.fromARGB(255, 33, 139, 253),
+        color: const Color.fromARGB(255, 33, 139, 253),
         child: Center(
             child: Container(
           width: MediaQuery.of(context).size.width * 1.56,
@@ -54,10 +60,11 @@ class _SplashScreenState extends State<SplashScreen> {
             const Text(
               'SuratGo',
               style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: 'Montserrat_Subrayada'),
+                color: Colors.white,
+                fontSize: 24,
+                fontWeight: FontWeight.w700,
+                fontFamily: 'Montserrat_Subrayada',
+              ),
             )
           ]),
         )),

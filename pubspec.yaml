@@ -71,6 +71,7 @@ flutter:
   assets:
     - assets/images/
     - lib/DATA/All_Stations-2.json
+    - lib/DATA/All_ROUTES.json
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

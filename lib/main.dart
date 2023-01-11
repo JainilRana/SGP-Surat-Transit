@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:surat_transit/Screens/RouteScreen.dart';
+import 'package:surat_transit/Screens/searchRoutes.dart';
 
 import 'package:surat_transit/Screens/splashScreen.dart';
 
-import 'Screens/HomeScreen.dart';
+import 'Screens/HomeScreenWidget/HomeScreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -23,7 +25,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: const SplashScreen(),
+      home: SplashScreen(),
     );
   }
 }
