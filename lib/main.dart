@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:surat_transit/Screens/RouteScreen.dart';
-import 'package:surat_transit/Screens/searchRoutes.dart';
 
 import 'package:surat_transit/Screens/splashScreen.dart';
 
-import 'Screens/HomeScreenWidget/HomeScreen.dart';
-
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -20,12 +16,12 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        textTheme: TextTheme(
+        textTheme: const TextTheme(
           bodyText1: TextStyle(fontFamily: 'poppins', fontSize: 14),
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
+      home: const SplashScreen(),
     );
   }
 }

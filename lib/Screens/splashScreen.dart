@@ -1,9 +1,6 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'HomeScreenWidget/HomeScreen.dart';
 import 'NavigationScreen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -15,22 +12,6 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
-  // late List<String> stations = [];
-  // late List<String> all_routes = [];
-  // Future<void> ReadJson() async {
-  //   final String jsondata =
-  //       await rootBundle.loadString('lib/DATA/All_Stations-2.json');
-  //   final list = json.decode(jsondata);
-  //   final String jsondata1 =
-  //       await rootBundle.loadString('lib/DATA/All_ROUTES.json');
-  //   final list1 = json.decode(jsondata1);
-  //   for (var element in list1) {
-  //     all_routes.add(element["all_routes"]);
-  //   }
-  //   for (var element in list) {
-  //     stations.add(element["all_station"]);
-  //   }
-  // }
 
   // ignore: non_constant_identifier_names
   void initState() {
@@ -41,12 +22,13 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: ((context) => NavigetScreen()),
+          builder: ((context) => const NavigetScreen()),
         ),
       );
     }));
   }
 
+// NavigetScreen()
   @override
   Widget build(BuildContext context) {
     return Scaffold(

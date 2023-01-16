@@ -1,10 +1,11 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import 'RouteScreen.dart';
+import 'package:surat_transit/Model/SetRouteModel.dart';
+import 'package:surat_transit/Screens/SecondScreen/stopslist.dart';
 
 class SearchRoutes extends StatefulWidget {
   @override
@@ -14,6 +15,8 @@ class SearchRoutes extends StatefulWidget {
 class _SearchRoutesState extends State<SearchRoutes> {
   var selectedRoute = "Select your Bus Routes";
   late List<String> all_routes = [];
+  late String platno;
+  late String totaltime;
   // ignore: non_constant_identifier_names
   Future<void> ReadJson() async {
     final String jsondata1 =
@@ -30,6 +33,33 @@ class _SearchRoutesState extends State<SearchRoutes> {
     ReadJson();
   }
 
+  // ignore: non_constant_identifier_names
+  Future<List<dynamic>> ReadJosn1() async {
+    var file = await rootBundle.loadString('lib/DATA/master-data.json');
+    var jsondata = json.decode(file);
+    return jsondata;
+  }
+
+  Future<SetRouteModel> feachData(String inp) async {
+    List<dynamic> feachdata = await ReadJosn1();
+
+    List<String> data = [];
+    for (var element in feachdata) {
+      for (var i = 0; i < (element[inp].length); i++) {
+        if (i == 0) {
+          platno = (element[inp][i]['Platform\nNo.']).toString();
+        } else if (i == element[inp].length - 1) {
+          totaltime = element[inp][i]['Travel Time (hh:mm:ss)'];
+        } else {
+          data.add(element[inp][i]['Stop Names']);
+        }
+      }
+    }
+    SetRouteModel s = SetRouteModel(selectedRoute, data, platno, totaltime);
+    return s;
+  }
+
+  late SetRouteModel r;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -79,8 +109,13 @@ class _SearchRoutesState extends State<SearchRoutes> {
             margin: const EdgeInsetsDirectional.only(top: 135),
             shadowColor: Colors.black,
             // surfaceTintColor: Colors.black,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+              side: const BorderSide(
+                color: Color.fromARGB(255, 255, 190, 59),
+                width: 3,
+              ),
+            ),
             child: SizedBox(
               width: 300,
               child: SizedBox(
@@ -96,6 +131,9 @@ class _SearchRoutesState extends State<SearchRoutes> {
                           TextStyle(color: Colors.black, fontFamily: 'poppins'),
                       textAlignVertical: TextAlignVertical(y: 0.15),
                       dropdownSearchDecoration: InputDecoration(
+                        prefix: SizedBox(
+                          width: 10,
+                        ),
                         isDense: true,
                         // isCollapsed: true,
                         border: InputBorder.none,
@@ -137,11 +175,20 @@ class _SearchRoutesState extends State<SearchRoutes> {
         Positioned(
           top: MediaQuery.of(context).size.height * 0.7,
           left: MediaQuery.of(context).size.height * 0.15,
-          child: Container(
+          child: SizedBox(
             width: 150,
             height: 46,
             child: OutlinedButton(
-              onPressed: (() {
+              onPressed: (() async {
+                var dat = await feachData(selectedRoute);
+
+                // ignore: use_build_context_synchronously
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: ((context) => StopList(selectedRoute, dat)),
+                  ),
+                );
                 print(selectedRoute);
               }),
               // ignore: sort_child_properties_last

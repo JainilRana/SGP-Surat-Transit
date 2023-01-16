@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 import 'HomeScreenWidget/HomeScreen.dart';
-import 'searchRoutes.dart';
+import 'SecondScreen/searchRoutes.dart';
 
 class NavigetScreen extends StatelessWidget {
   const NavigetScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: CustomNavigation(),
     );

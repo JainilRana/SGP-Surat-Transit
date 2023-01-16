@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 
 import 'package:surat_transit/Screens/HomeScreenWidget/SelectCard.dart';
 
-import '../RouteScreen.dart';
+import 'RouteScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen();
