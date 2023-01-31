@@ -3,8 +3,10 @@ class SetRouteModel {
   final List<String> routes;
   final String platNo;
   final String totaltime;
-
-  SetRouteModel(this.selected, this.routes, this.platNo, this.totaltime);
+  final String startPoint;
+  final String endPoint;
+  SetRouteModel(this.selected, this.routes, this.platNo, this.totaltime,
+      this.startPoint, this.endPoint);
   @override
   String toString() {
     // TODO: implement toString

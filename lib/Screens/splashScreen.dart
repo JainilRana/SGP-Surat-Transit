@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'NavigationScreen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -11,18 +13,20 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  @override
+  Future<void> readJson() async {
+    final String jsondata =
+        await rootBundle.loadString('lib/DATA/master-data.json');
+    final list = json.decode(jsondata);
+  }
 
-  // ignore: non_constant_identifier_names
+  @override
   void initState() {
-    // TODO: implement initState
-    // ReadJson();
     super.initState();
-    Timer(Duration(seconds: 7), (() {
+    Timer(const Duration(seconds: 7), (() {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: ((context) => const NavigetScreen()),
+          builder: ((context) => const CustomNavigation()),
         ),
       );
     }));

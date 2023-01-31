@@ -3,18 +3,6 @@ import 'package:flutter/material.dart';
 import 'HomeScreenWidget/HomeScreen.dart';
 import 'SecondScreen/searchRoutes.dart';
 
-class NavigetScreen extends StatelessWidget {
-  const NavigetScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: CustomNavigation(),
-    );
-  }
-}
-
 class CustomNavigation extends StatefulWidget {
   const CustomNavigation({super.key});
 
@@ -24,10 +12,10 @@ class CustomNavigation extends StatefulWidget {
 
 class _CustomNavigationState extends State<CustomNavigation> {
   var selectedindex = 0;
-  static final List<Widget> _Screens = [
-    HomeScreen(),
+  static final List<Widget> _screens = [
+    const HomeScreen(),
     SearchRoutes(),
-    HomeScreen(),
+    const HomeScreen(),
   ];
   void _onTapped(int index) {
     setState(() {
@@ -47,7 +35,7 @@ class _CustomNavigationState extends State<CustomNavigation> {
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),
-      body: _Screens.elementAt(selectedindex),
+      body: _screens.elementAt(selectedindex),
       bottomNavigationBar: Card(
         elevation: 20,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),

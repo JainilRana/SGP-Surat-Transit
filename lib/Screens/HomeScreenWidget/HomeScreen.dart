@@ -1,41 +1,23 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'package:surat_transit/Screens/HomeScreenWidget/SelectCard.dart';
+import 'package:surat_transit/getsMethod.dart';
 
 import 'RouteScreen.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen();
+  const HomeScreen({super.key});
 
   @override
-  // ignore: no_logic_in_create_state
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
   int bottomindex = 0;
-  late List<String> stations = [];
 
-  Future<void> ReadJson() async {
-    final String jsondata =
-        await rootBundle.loadString('lib/DATA/All_Stations-2.json');
-    final list = json.decode(jsondata);
-
-    for (var element in list) {
-      stations.add(element["all_station"]);
-    }
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    print('build Station list.');
-    ReadJson();
-    super.initState();
-  }
+  Map<String, dynamic> stationInfo = {};
+  GetMethod g = GetMethod();
+  List<String?> stations = GetMethod().getListAll();
 
   var selected_Station = ["Select Location..", "To.."];
 
@@ -102,7 +84,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 46,
                   child: OutlinedButton(
                     onPressed: (() {
-                      print(selected_Station[0] + " " + selected_Station[1]);
+                      // print(selected_Station[0] + " " + selected_Station[1]);
+                      var pr =
+                          g.findRoute(selected_Station[0], selected_Station[1]);
+                      if (pr[0] != 'No') {
+                        for (var element in pr) {
+                          for (var e in element) {
+                            print(
+                              'Sr.No:${e.srNo}\nStopName:${e.stopNames}\ntravelTimeHhMmSs:${e.travelTimeHhMmSs}\nplatformNo:${e.platformNo}\n',
+                            );
+                          }
+                        }
+                      }
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -110,21 +103,20 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       );
                     }),
-                    // ignore: sort_child_properties_last
-                    child: Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        'Find Route',
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                            color: Color.fromRGBO(35, 138, 250, 1),
-                            fontWeight: FontWeight.w800),
-                      ),
-                    ),
                     style: OutlinedButton.styleFrom(
                       backgroundColor: Colors.white,
                       elevation: 10,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Find Route',
+                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                            color: const Color.fromRGBO(35, 138, 250, 1),
+                            fontWeight: FontWeight.w800),
                       ),
                     ),
                   ),

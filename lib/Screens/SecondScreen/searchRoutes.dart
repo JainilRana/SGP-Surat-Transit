@@ -8,20 +8,26 @@ import 'package:surat_transit/Model/SetRouteModel.dart';
 import 'package:surat_transit/Screens/SecondScreen/stopslist.dart';
 
 class SearchRoutes extends StatefulWidget {
+  const SearchRoutes({super.key});
+
   @override
   State<SearchRoutes> createState() => _SearchRoutesState();
 }
 
 class _SearchRoutesState extends State<SearchRoutes> {
   var selectedRoute = "Select your Bus Routes";
-  late List<String> all_routes = [];
+  String time = '${DateTime.now().hour}:${DateTime.now().minute}';
+
   late String platno;
   late String totaltime;
   // ignore: non_constant_identifier_names
-  Future<void> ReadJson() async {
+  List<String> all_routes = [];
+  Future<void> readJson() async {
     final String jsondata1 =
         await rootBundle.loadString('lib/DATA/All_ROUTES.json');
+
     final list1 = json.decode(jsondata1);
+
     for (var element in list1) {
       all_routes.add(element["all_routes"]);
     }
@@ -29,8 +35,9 @@ class _SearchRoutesState extends State<SearchRoutes> {
 
   @override
   void initState() {
+    super.initState();
     print("get list.");
-    ReadJson();
+    readJson();
   }
 
   // ignore: non_constant_identifier_names
@@ -42,20 +49,24 @@ class _SearchRoutesState extends State<SearchRoutes> {
 
   Future<SetRouteModel> feachData(String inp) async {
     List<dynamic> feachdata = await ReadJosn1();
-
+    String startPoint = '';
+    String endPoint = '';
     List<String> data = [];
     for (var element in feachdata) {
       for (var i = 0; i < (element[inp].length); i++) {
         if (i == 0) {
-          platno = (element[inp][i]['Platform\nNo.']).toString();
+          platno = (element[inp][i]['PlatformNo.']).toString();
+          startPoint += element[inp][i]['Stop Names'];
         } else if (i == element[inp].length - 1) {
           totaltime = element[inp][i]['Travel Time (hh:mm:ss)'];
+          endPoint += element[inp][i]['Stop Names'];
         } else {
           data.add(element[inp][i]['Stop Names']);
         }
       }
     }
-    SetRouteModel s = SetRouteModel(selectedRoute, data, platno, totaltime);
+    SetRouteModel s = SetRouteModel(
+        selectedRoute, data, platno, totaltime, startPoint, endPoint);
     return s;
   }
 
@@ -64,17 +75,6 @@ class _SearchRoutesState extends State<SearchRoutes> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Column(
-          children: [
-            Expanded(
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ],
-        ),
         Column(
           children: [
             Container(
@@ -98,6 +98,47 @@ class _SearchRoutesState extends State<SearchRoutes> {
                 decoration: BoxDecoration(
                   color: Color.fromARGB(255, 255, 190, 59),
                   borderRadius: BorderRadius.circular(20),
+                ),
+                child: Center(
+                  child: SizedBox(
+                    width: 150,
+                    height: 46,
+                    child: OutlinedButton(
+                      onPressed: (() async {
+                        var dat = await feachData(selectedRoute);
+
+                        // ignore: use_build_context_synchronously
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: ((context) =>
+                                StopList(selectedRoute, dat)),
+                          ),
+                        );
+                        print(selectedRoute);
+                      }),
+                      // ignore: sort_child_properties_last
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          'Find Route',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText1
+                              ?.copyWith(
+                                  color: Color.fromARGB(255, 255, 190, 59),
+                                  fontWeight: FontWeight.w800),
+                        ),
+                      ),
+                      style: OutlinedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        elevation: 4,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -147,7 +188,9 @@ class _SearchRoutesState extends State<SearchRoutes> {
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: "Search here...",
-                          hintStyle: TextStyle(color: Colors.blue),
+                          hintStyle: TextStyle(
+                            color: Color.fromARGB(255, 255, 190, 59),
+                          ),
                           contentPadding: EdgeInsets.all(8),
                         ),
                       ),
@@ -165,6 +208,10 @@ class _SearchRoutesState extends State<SearchRoutes> {
                     onChanged: (value) {
                       selectedRoute = value;
                       print(selectedRoute);
+                      setState(() {
+                        time =
+                            '${DateTime.now().hour}:${DateTime.now().minute}';
+                      });
                     },
                   ),
                 ),
@@ -173,42 +220,11 @@ class _SearchRoutesState extends State<SearchRoutes> {
           ),
         ),
         Positioned(
-          top: MediaQuery.of(context).size.height * 0.7,
-          left: MediaQuery.of(context).size.height * 0.15,
-          child: SizedBox(
-            width: 150,
-            height: 46,
-            child: OutlinedButton(
-              onPressed: (() async {
-                var dat = await feachData(selectedRoute);
-
-                // ignore: use_build_context_synchronously
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: ((context) => StopList(selectedRoute, dat)),
-                  ),
-                );
-                print(selectedRoute);
-              }),
-              // ignore: sort_child_properties_last
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  'Find Route',
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                      color: Color.fromARGB(255, 255, 190, 59),
-                      fontWeight: FontWeight.w800),
-                ),
-              ),
-              style: OutlinedButton.styleFrom(
-                backgroundColor: Colors.white,
-                elevation: 4,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-              ),
-            ),
+          top: 80,
+          left: 30,
+          child: Text(
+            time,
+            style: TextStyle(color: Colors.white, fontSize: 48),
           ),
         )
       ],

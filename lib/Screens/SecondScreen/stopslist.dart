@@ -41,9 +41,10 @@ class StopList extends StatelessWidget {
               ),
             ),
             StartPointWidget(
-                selected: selected,
-                totaltime: stops.totaltime,
-                platno: stops.platNo),
+              selected: stops.startPoint,
+              totaltime: stops.totaltime,
+              platno: stops.platNo,
+            ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.015,
             ),
@@ -52,7 +53,7 @@ class StopList extends StatelessWidget {
               height: MediaQuery.of(context).size.height * 0.015,
             ),
             Expanded(
-              child: EndPointWidget(selected: selected),
+              child: EndPointWidget(selected: stops.endPoint),
             )
           ],
         ),
@@ -123,9 +124,7 @@ class StartPointWidget extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.7,
                         child: Text(
-                          selected.contains('TO')
-                              ? selected.split('TO')[0]
-                              : selected.split('-')[0],
+                          selected,
                           textScaleFactor: 1.4,
                           overflow: TextOverflow.visible,
                           style: Theme.of(context).textTheme.bodyText1,
@@ -170,15 +169,7 @@ class StartPointWidget extends StatelessWidget {
                                 .bodyText1
                                 ?.copyWith(fontSize: 16),
                           ),
-                          Text(
-                            totaltime.split(':')[0] == '00'
-                                ? '${totaltime.split(':')[1]}m ${totaltime.split(':')[2]}sec'
-                                : '${totaltime.split(':')[0]}hrs ${totaltime.split(':')[1]}m ${totaltime.split(':')[2]}sec',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText1
-                                ?.copyWith(fontSize: 16),
-                          ),
+                          TimeDisplay(totaltime: totaltime),
                         ],
                       ),
                     )
@@ -189,6 +180,25 @@ class StartPointWidget extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+}
+
+class TimeDisplay extends StatelessWidget {
+  const TimeDisplay({
+    Key? key,
+    required this.totaltime,
+  }) : super(key: key);
+
+  final String totaltime;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      totaltime.split(':')[0] == '00'
+          ? '${totaltime.split(':')[1]}m ${totaltime.split(':')[2]}sec'
+          : '${totaltime.split(':')[0]}hrs ${totaltime.split(':')[1]}m ${totaltime.split(':')[2]}sec',
+      style: Theme.of(context).textTheme.bodyText1?.copyWith(fontSize: 16),
     );
   }
 }
@@ -274,13 +284,16 @@ class EndPointWidget extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(
+            width: 16,
+          ),
           Column(
             children: [
               Expanded(
                 child: Container(
                   width: 50,
                   color: Colors.transparent,
-                  child: Icon(Icons.keyboard_arrow_right_sharp),
+                  child: Icon(Icons.subdirectory_arrow_right),
                 ),
               ),
             ],
@@ -288,7 +301,7 @@ class EndPointWidget extends StatelessWidget {
           Row(
             children: [
               const SizedBox(
-                width: 24,
+                width: 12,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -302,9 +315,7 @@ class EndPointWidget extends StatelessWidget {
                   SizedBox(
                     width: 260,
                     child: Text(
-                      selected.contains('TO')
-                          ? selected.split('TO ')[1]
-                          : selected.split('- ')[1],
+                      selected,
                       textScaleFactor: 1.1,
                       overflow: TextOverflow.visible,
                       style: Theme.of(context).textTheme.bodyText1,

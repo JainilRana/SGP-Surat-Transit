@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 class RouteModel {
   final int pt_no;
   final double time;
