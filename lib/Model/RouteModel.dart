@@ -1,12 +1,15 @@
 class RouteModel {
   final int pt_no;
-  final double time;
+  final String time;
+  final String startendroute;
   final double distance;
   final List<String> between_Stations;
-  RouteModel(
-    this.pt_no,
-    this.time,
-    this.distance,
-    this.between_Stations,
-  );
+
+  RouteModel({
+    required this.pt_no,
+    required this.time,
+    required this.distance,
+    required this.between_Stations,
+    required this.startendroute,
+  });
 }

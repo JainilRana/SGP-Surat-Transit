@@ -1,4 +1,7 @@
 // ignore: file_names
+import 'package:flutter/material.dart';
+import 'package:surat_transit/Model/RouteModel.dart';
+
 import 'Model/Object.dart';
 import 'Model/listofobj.dart';
 
@@ -170,27 +173,182 @@ class GetMethod {
       }
     }
     print(aviRoute);
+    //if direct route is not possible .
     if (aviRoute.isEmpty) {
-      return ['No'];
-    }
-    List possibleRoute = [];
-    for (var element in aviRoute) {
-      List between = [];
-      bool f = true;
-      for (var el in kl[element]) {
-        if (el.stopNames == s) {
-          f = true;
+      List<int> sIndex = [];
+      List<int> eIndex = [];
+      for (var element in routeStation) {
+        if (element.contains(s)) {
+          sIndex.add(routeStation.indexOf(element));
         }
-        if (f) {
-          between.add(el);
-          if (el.stopNames == s || el.stopNames == e) {
-            print('188:${el.stopNames}');
+        if (element.contains(e)) {
+          eIndex.add(routeStation.indexOf(element));
+        }
+      }
+      print('s:$sIndex\ne:$eIndex');
+      List gy = [];
+      for (var element in sIndex) {
+        List<String> commanpoint;
+        for (var element1 in eIndex) {
+          commanpoint = findtrav(routeStation[element], routeStation[element1]);
+          if (commanpoint.isNotEmpty) {
+            print('s[$element]-e[$element1]:$commanpoint\n');
+
+            for (var cp in commanpoint) {
+              RouteModel x = route(kl, element, cp, element1, s, e);
+              if (x.between_Stations.isNotEmpty) {
+                gy.add(x);
+              }
+            }
           }
         }
       }
-      possibleRoute.add(between);
+      if (gy.isEmpty) {
+        return ['No'];
+      }
+      // for (var i = 1; i < gy.length; i++) {
+      //   RouteModel k = gy[i];
+      //   int key = (gy[i].between_Stations).length;
+      //   int j = i - 1;
+      //   while (key < (gy[j].between_Stations).length && j >= 0) {
+      //     gy[j + 1] = gy[j];
+      //     --j;
+      //   }
+      //   gy[j + 1] = k;
+      // }
+      return gy;
+    }
+    List possibleRoute = [];
+    for (var element in aviRoute) {
+      List<String> between = [];
+      int ptno = 0;
+      var time;
+      bool f = false;
+      for (var el in kl[element]) {
+        if (el.stopNames == s) {
+          ptno = el.platformNo;
+          // print(el.srNo);
+          f = true;
+        }
+        if (f) {
+          between.add(el.stopNames);
+        }
+        if (el.stopNames == e) {
+          time = el.travelTimeHhMmSs;
+          f = false;
+        }
+      }
+      // print(between);
+      RouteModel r = RouteModel(
+        pt_no: ptno,
+        time: time,
+        distance: 0,
+        between_Stations: between,
+        startendroute: '',
+      );
+
+      possibleRoute.add(r);
       print('\n');
     }
     return possibleRoute;
   }
+}
+
+RouteModel route(
+  var k,
+  int routeStation,
+  String commanpoint,
+  int routeStation2,
+  String s,
+  String e,
+) {
+  List<String> c1 = [], c2 = [];
+  var flag = false;
+  var flag1 = false;
+  var pt_no = [];
+  // print('${routeStation.indexOf(s)}<${routeStation.indexOf(commanpoint)}');
+  for (var element in k[routeStation]) {
+    if (element.stopNames == s) {
+      // print('pt_s:${element.platformNo}');
+      pt_no.add(element.platformNo);
+      flag = true;
+    }
+    if (flag) {
+      c1.add(element.stopNames);
+    }
+    if (element.stopNames == commanpoint) {
+      pt_no.add(element.platformNo);
+      flag = false;
+      break;
+    }
+  }
+  c1.add('travel');
+  for (var element in k[routeStation2]) {
+    if (element.stopNames == commanpoint) {
+      print('291:pt_c:${element.platformNo}');
+      flag1 = true;
+    }
+    if (flag1) {
+      c2.add(element.stopNames);
+    }
+    if (element.stopNames == e) {
+      flag1 = false;
+      print('pt_e:${element.platformNo}');
+      pt_no.add(element.platformNo);
+      break;
+    }
+  }
+  if (c1.length > 1 && c2.isNotEmpty) {
+    print('C1:$c1\nC2:$c2');
+  }
+  List<String> c = c1 + c2;
+  print('308:lenC1:${c1.length}--lenC2:${c2.length}');
+  RouteModel r1;
+  if (c[0] == 'travel' || c[c.length - 1] == 'travel') {
+    r1 = RouteModel(
+      pt_no: 0,
+      time: '',
+      distance: 0,
+      between_Stations: [],
+      startendroute: s,
+    );
+    return r1;
+  }
+  print('C:$c\n');
+  print(
+    '196:${k[routeStation][1].runtimeType}-${k[routeStation2][1].runtimeType}',
+  );
+  String s1 =
+      '${k[routeStation][1].runtimeType}-${k[routeStation2][1].runtimeType}';
+  r1 = RouteModel(
+    pt_no: pt_no[0],
+    time: '',
+    distance: 0,
+    between_Stations: c,
+    startendroute: s1,
+  );
+  return r1;
+}
+
+List<String> findtrav(List<String> routeStation, List<String> routeStation2) {
+  List<String> l = [];
+  for (var element in routeStation) {
+    for (var element1 in routeStation2) {
+      if (element == element1) {
+        l.add(element);
+      }
+    }
+  }
+
+  return l;
+}
+
+void showSnackbar(context, color, message) {
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: Text(
+      message,
+      style: TextStyle(fontSize: 14),
+    ),
+    backgroundColor: color,
+  ));
 }

@@ -10,6 +10,6 @@ class SetRouteModel {
   @override
   String toString() {
     // TODO: implement toString
-    return selected + " " + platNo + " " + totaltime + "\n" + routes.toString();
+    return "$selected $platNo $totaltime\n$routes";
   }
 }

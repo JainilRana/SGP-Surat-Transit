@@ -55,7 +55,9 @@ class _SearchRoutesState extends State<SearchRoutes> {
     for (var element in feachdata) {
       for (var i = 0; i < (element[inp].length); i++) {
         if (i == 0) {
-          platno = (element[inp][i]['PlatformNo.']).toString();
+          platno = (element[inp][i]['PlatformNo;']).toString() != '0'
+              ? (element[inp][i]['PlatformNo;']).toString()
+              : '--';
           startPoint += element[inp][i]['Stop Names'];
         } else if (i == element[inp].length - 1) {
           totaltime = element[inp][i]['Travel Time (hh:mm:ss)'];

@@ -17,7 +17,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Map<String, dynamic> stationInfo = {};
   GetMethod g = GetMethod();
-  List<String?> stations = GetMethod().getListAll();
+  List<String?> stations = [];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    stations = GetMethod().getListAll();
+  }
 
   var selected_Station = ["Select Location..", "To.."];
 
@@ -85,23 +91,34 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: OutlinedButton(
                     onPressed: (() {
                       // print(selected_Station[0] + " " + selected_Station[1]);
-                      var pr =
-                          g.findRoute(selected_Station[0], selected_Station[1]);
-                      if (pr[0] != 'No') {
-                        for (var element in pr) {
-                          for (var e in element) {
-                            print(
-                              'Sr.No:${e.srNo}\nStopName:${e.stopNames}\ntravelTimeHhMmSs:${e.travelTimeHhMmSs}\nplatformNo:${e.platformNo}\n',
-                            );
-                          }
-                        }
+                      List pr;
+                      if (selected_Station[0] != selected_Station[1]) {
+                        pr = g.findRoute(
+                            selected_Station[0], selected_Station[1]);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => RouteScreen(
+                              selected_Station,
+                              pr,
+                            ),
+                          ),
+                        );
+                      } else {
+                        showSnackbar(
+                            context, Colors.black, "Enter Different Point");
                       }
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => RouteScreen(selected_Station),
-                        ),
-                      );
+                      // print(pr[0].between_Stations);
+                      // if (pr[0] != 'No') {
+                      //   for (var element in pr) {
+                      //     for (var
+                      //e in element) {
+                      //       print(
+                      //         'Sr.No:${e.srNo}\nStopName:${e.stopNames}\ntravelTimeHhMmSs:${e.travelTimeHhMmSs}\nplatformNo:${e.platformNo}\n',
+                      //       );
+                      //     }
+                      //   }
+                      // }
                     }),
                     style: OutlinedButton.styleFrom(
                       backgroundColor: Colors.white,

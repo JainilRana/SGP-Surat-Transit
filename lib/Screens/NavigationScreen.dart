@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:surat_transit/Screens/ExploreScreen/ThirdScreen.dart';
 
 import 'HomeScreenWidget/HomeScreen.dart';
 import 'SecondScreen/searchRoutes.dart';
@@ -14,8 +15,8 @@ class _CustomNavigationState extends State<CustomNavigation> {
   var selectedindex = 0;
   static final List<Widget> _screens = [
     const HomeScreen(),
-    SearchRoutes(),
-    const HomeScreen(),
+    const SearchRoutes(),
+    ExploreScreen(),
   ];
   void _onTapped(int index) {
     setState(() {
@@ -31,10 +32,10 @@ class _CustomNavigationState extends State<CustomNavigation> {
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
       backgroundColor: Color.fromARGB(255, 255, 255, 255),
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-      ),
+      // appBar: AppBar(
+      //   elevation: 0,
+      //   backgroundColor: Colors.transparent,
+      // ),
       body: _screens.elementAt(selectedindex),
       bottomNavigationBar: Card(
         elevation: 20,
