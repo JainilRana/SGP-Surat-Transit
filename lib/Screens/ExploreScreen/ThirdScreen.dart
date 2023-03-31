@@ -12,55 +12,54 @@ import 'package:surat_transit/Screens/ExploreScreen/detail_screen.dart';
 var cardAspectRatio = 12.0 / 16.0;
 var widgetAspectRatio = cardAspectRatio * 1.2;
 
-
-
 class CustomIcons {
   static const IconData menu = IconData(0xe900, fontFamily: "CustomIcons");
   static const IconData option = IconData(0xe902, fontFamily: "CustomIcons");
 }
 
 class ExploreScreen extends StatefulWidget {
+  const ExploreScreen({super.key});
+
   @override
   _ExploreScreenState createState() => _ExploreScreenState();
 }
-late ExploreSurat a;
-class _ExploreScreenState extends State<ExploreScreen> {
 
-  List<ExploreSurat> s=[];
-  Map<String,String> places = {};
-  Future<void> readJson() async{
-    final String data = await rootBundle.loadString("lib/DATA/exploredata.json");
+late ExploreSurat a;
+
+class _ExploreScreenState extends State<ExploreScreen> {
+  List<ExploreSurat> s = [];
+  Map<String, String> places = {};
+  Future<void> readJson() async {
+    final String data =
+        await rootBundle.loadString("lib/DATA/exploredata.json");
     final redable = json.decode(data);
-    for(var i in redable){
+    for (var i in redable) {
       String name = i["name"];
       places[name] = i["data"];
     }
   }
 
-  double currentPage=1.0;
+  double currentPage = 1.0;
 
-  Future<void> ReadExplore() async{
-
+  Future<void> ReadExplore() async {
     var read1 = await rootBundle.loadString("lib/DATA/exploredata.json");
     List<dynamic> list1 = json.decode(read1);
     for (var element in list1) {
-      var x=ExploreSurat.fromJson(element);
+      var x = ExploreSurat.fromJson(element);
       s.add(x);
     }
     // currentPage = s.length - 1.0;
   }
 
-  void initState(){
+  void initState() {
     super.initState();
     print("Loading Json data!");
     readJson();
     print("Data loaded");
     ReadExplore();
     // print(places);
-    currentPage=s.length-1.0;
+    currentPage = s.length - 1.0;
   }
-
-  
 
   // Future<CardScrollWidget> getData(var currentpage) async{
   //   // List<dynamic> l =  await ReadExplore();
@@ -68,7 +67,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
   //   CardScrollWidget x = CardScrollWidget(currentPage,s);
   //   return x;
   // }
-
 
   @override
   Widget build(BuildContext context) {
@@ -85,20 +83,28 @@ class _ExploreScreenState extends State<ExploreScreen> {
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
-                Center(
-                  child: Container(
-                    margin: EdgeInsets.only(top: 20),
-                    height: 50,
-                    width: 200,
-                    child: Card(
-                      elevation: 20,
-                      color: Colors.blueGrey,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
-                      child: Center(child: Text("Explore SURAT!",style: TextStyle(fontSize: 20,fontFamily: "assets/Exo_2",fontWeight: FontWeight.bold),)),
-                    ),
+              Center(
+                child: Container(
+                  margin: EdgeInsets.only(top: 20),
+                  height: 50,
+                  width: 200,
+                  child: Card(
+                    elevation: 20,
+                    color: Colors.blueGrey,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    child: Center(
+                        child: Text(
+                      "Explore SURAT!",
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontFamily: "assets/Exo_2",
+                          fontWeight: FontWeight.bold),
+                    )),
                   ),
                 ),
-               SingleChildScrollView(
+              ),
+              SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Column(
                   children: [
@@ -113,7 +119,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                             controller: controller,
                             reverse: true,
                             itemBuilder: (context, index) {
-                              return  Column(
+                              return Column(
                                 children: [
                                   GestureDetector(
                                     onTap: () {
@@ -121,19 +127,17 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                           context,
                                           MaterialPageRoute(
                                               builder: ((context) =>
-                                                  DetailScreen(s[index])))
-                                      );
+                                                  DetailScreen(s[index]))));
                                     },
-
                                     child: Container(
-                                      margin: EdgeInsets.only(top: 10,bottom: 10),
+                                      margin:
+                                          EdgeInsets.only(top: 10, bottom: 10),
                                       child: Favourites(
                                         s[index].name as String,
                                         s[index].image as String,
                                       ),
                                     ),
                                   ),
-
                                 ],
                               );
                               // child: SizedBox(
@@ -144,7 +148,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
                         ),
                       ),
                     ),
-
 
                     // Favourites(
                     //   "Fallen In Love",
@@ -199,7 +202,6 @@ class Favourites extends StatelessWidget {
     this.imageUrl,
   );
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -209,7 +211,8 @@ class Favourites extends StatelessWidget {
             height: 260,
             width: 350,
             child: Card(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(15))),
               elevation: 20,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15.0),

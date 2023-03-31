@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:surat_transit/Model/RouteModel.dart';
 
-import 'Model/Object.dart';
-import 'Model/listofobj.dart';
+import '../Model/Object.dart';
+import '../Model/listofobj.dart';
 
 class GetMethod {
   late List<String?> station = [];
@@ -172,7 +172,7 @@ class GetMethod {
         aviRoute.add(routeStation.indexOf(element));
       }
     }
-    print(aviRoute);
+    // print(aviRoute);
     //if direct route is not possible .
     if (aviRoute.isEmpty) {
       List<int> sIndex = [];
@@ -185,14 +185,14 @@ class GetMethod {
           eIndex.add(routeStation.indexOf(element));
         }
       }
-      print('s:$sIndex\ne:$eIndex');
+      // print('s:$sIndex\ne:$eIndex');
       List gy = [];
       for (var element in sIndex) {
         List<String> commanpoint;
         for (var element1 in eIndex) {
           commanpoint = findtrav(routeStation[element], routeStation[element1]);
           if (commanpoint.isNotEmpty) {
-            print('s[$element]-e[$element1]:$commanpoint\n');
+            // print('s[$element]-e[$element1]:$commanpoint\n');
 
             for (var cp in commanpoint) {
               RouteModel x = route(kl, element, cp, element1, s, e);
@@ -206,23 +206,15 @@ class GetMethod {
       if (gy.isEmpty) {
         return ['No'];
       }
-      // for (var i = 1; i < gy.length; i++) {
-      //   RouteModel k = gy[i];
-      //   int key = (gy[i].between_Stations).length;
-      //   int j = i - 1;
-      //   while (key < (gy[j].between_Stations).length && j >= 0) {
-      //     gy[j + 1] = gy[j];
-      //     --j;
-      //   }
-      //   gy[j + 1] = k;
-      // }
       return gy;
     }
+    // direct route is possible .
     List possibleRoute = [];
     for (var element in aviRoute) {
       List<String> between = [];
       int ptno = 0;
       var time;
+      String routeName = '${kl[element][0].runtimeType}';
       bool f = false;
       for (var el in kl[element]) {
         if (el.stopNames == s) {
@@ -244,11 +236,11 @@ class GetMethod {
         time: time,
         distance: 0,
         between_Stations: between,
-        startendroute: '',
+        startendroute: routeName,
       );
 
       possibleRoute.add(r);
-      print('\n');
+      // print('\n');
     }
     return possibleRoute;
   }
@@ -285,7 +277,7 @@ RouteModel route(
   c1.add('travel');
   for (var element in k[routeStation2]) {
     if (element.stopNames == commanpoint) {
-      print('291:pt_c:${element.platformNo}');
+      // print('291:pt_c:${element.platformNo}');
       flag1 = true;
     }
     if (flag1) {
@@ -293,16 +285,16 @@ RouteModel route(
     }
     if (element.stopNames == e) {
       flag1 = false;
-      print('pt_e:${element.platformNo}');
+      // print('pt_e:${element.platformNo}');
       pt_no.add(element.platformNo);
       break;
     }
   }
   if (c1.length > 1 && c2.isNotEmpty) {
-    print('C1:$c1\nC2:$c2');
+    // print('C1:$c1\nC2:$c2');
   }
   List<String> c = c1 + c2;
-  print('308:lenC1:${c1.length}--lenC2:${c2.length}');
+  // print('308:lenC1:${c1.length}--lenC2:${c2.length}');
   RouteModel r1;
   if (c[0] == 'travel' || c[c.length - 1] == 'travel') {
     r1 = RouteModel(
@@ -314,10 +306,10 @@ RouteModel route(
     );
     return r1;
   }
-  print('C:$c\n');
-  print(
-    '196:${k[routeStation][1].runtimeType}-${k[routeStation2][1].runtimeType}',
-  );
+  // print('C:$c\n');
+  // print(
+  //   '196:${k[routeStation][1].runtimeType}-${k[routeStation2][1].runtimeType}',
+  // );
   String s1 =
       '${k[routeStation][1].runtimeType}-${k[routeStation2][1].runtimeType}';
   r1 = RouteModel(
@@ -351,4 +343,13 @@ void showSnackbar(context, color, message) {
     ),
     backgroundColor: color,
   ));
+}
+
+void nextScreen(context, nextScreen) {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: ((context) => nextScreen),
+    ),
+  );
 }

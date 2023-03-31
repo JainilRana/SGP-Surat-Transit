@@ -11,7 +11,7 @@ class DetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          backgroundColor: Color(0xFF2d3447),
+          backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Color(0xFF2d3447),
             title: Text('More about this place!'),
@@ -19,7 +19,7 @@ class DetailScreen extends StatelessWidget {
           body: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                Container(
+                SizedBox(
                   height: 300,
                   width: double.infinity,
                   child: Image.asset(
@@ -28,7 +28,7 @@ class DetailScreen extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -46,17 +46,16 @@ class DetailScreen extends StatelessWidget {
                             ),
                           ),
                           Spacer(),
-                          
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Text(
                         s.data as String,
                         style: TextStyle(
                           fontSize: 15,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                       // SizedBox(

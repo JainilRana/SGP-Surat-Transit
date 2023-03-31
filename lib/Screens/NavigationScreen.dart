@@ -68,12 +68,19 @@ class _CustomNavigationState extends State<CustomNavigation> {
                   label: "Plan",
                   activeIcon: ImageIcon(
                     AssetImage('assets/images/edit.png'),
-                    color: Color.fromRGBO(35, 138, 250, 1),
+                    color: Color.fromARGB(255, 255, 190, 59),
                     size: 42,
                   ),
                 ),
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.explore_outlined), label: "Explore")
+                  icon: Icon(Icons.explore_outlined),
+                  label: "Explore",
+                  activeIcon: Icon(
+                    Icons.explore_outlined,
+                    color: Color.fromARGB(255, 55, 52, 52),
+                    size: 32,
+                  ),
+                )
               ]),
         ),
       ),

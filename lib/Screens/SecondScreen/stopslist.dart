@@ -4,7 +4,7 @@ import 'package:surat_transit/Model/SetRouteModel.dart';
 class StopList extends StatelessWidget {
   SetRouteModel stops;
   String selected;
-  StopList(this.selected, this.stops);
+  StopList(this.selected, this.stops, {super.key});
 
   // ignore: non_constant_identifier_names
 
@@ -109,7 +109,7 @@ class StartPointWidget extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 20, top: 28),
-                child: Container(
+                child: SizedBox(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -139,7 +139,7 @@ class StartPointWidget extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Container(
+                    SizedBox(
                       child: Column(
                         children: [
                           Text(
@@ -150,7 +150,7 @@ class StartPointWidget extends StatelessWidget {
                                 ?.copyWith(fontSize: 16),
                           ),
                           Text(
-                            'No.' + platno,
+                            'No.$platno',
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyText1
@@ -159,7 +159,7 @@ class StartPointWidget extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Container(
+                    SizedBox(
                       child: Column(
                         children: [
                           Text(
@@ -284,7 +284,7 @@ class EndPointWidget extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
+          const SizedBox(
             width: 16,
           ),
           Column(
