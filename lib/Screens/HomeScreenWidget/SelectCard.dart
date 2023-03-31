@@ -5,16 +5,23 @@ class SelectedCard extends StatefulWidget {
   // ignore: prefer_typing_uninitialized_variables
   final list;
   var selected;
-  SelectedCard(this.list, this.selected);
+  SelectedCard(this.list, this.selected, {super.key});
   @override
-  State<SelectedCard> createState() => _SelectedCardState(list, selected);
+  State<SelectedCard> createState() => _SelectedCardState();
 }
 
 class _SelectedCardState extends State<SelectedCard> {
-  // ignore: prefer_typing_uninitialized_variables
   var stationsList;
-  List<String> selected_Station;
-  _SelectedCardState(this.stationsList, this.selected_Station);
+  late List<String> selected_Station = [];
+
+  // _SelectedCardState(this.stationsList, this.selected_Station);
+  @override
+  void initState() {
+    super.initState();
+    selected_Station = widget.selected;
+    stationsList = widget.list;
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -74,13 +81,13 @@ class _SelectedCardState extends State<SelectedCard> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            insetPadding: EdgeInsets.symmetric(
+                            insetPadding: const EdgeInsets.symmetric(
                                 horizontal: 35, vertical: 30),
                           ),
                         ),
                         onChanged: (value) {
                           selected_Station[0] = value;
-                          print(selected_Station[0]);
+                          // print(selected_Station[0]);
                         },
                       ),
                     ),
@@ -137,7 +144,7 @@ class _SelectedCardState extends State<SelectedCard> {
                         ),
                         onChanged: (value) {
                           selected_Station[1] = value;
-                          print(selected_Station[1]);
+                          // print(selected_Station[1]);
                         },
                       ),
                     ),

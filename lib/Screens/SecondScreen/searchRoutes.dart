@@ -36,7 +36,7 @@ class _SearchRoutesState extends State<SearchRoutes> {
   @override
   void initState() {
     super.initState();
-    print("get list.");
+    // print("get list.");
     readJson();
   }
 
@@ -98,7 +98,7 @@ class _SearchRoutesState extends State<SearchRoutes> {
               child: Container(
                 height: MediaQuery.of(context).size.height * 0.32,
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 255, 190, 59),
+                  color: const Color.fromARGB(255, 255, 190, 59),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Center(
@@ -117,18 +117,19 @@ class _SearchRoutesState extends State<SearchRoutes> {
                                 StopList(selectedRoute, dat)),
                           ),
                         );
-                        print(selectedRoute);
+                        // print(selectedRoute);
                       }),
                       // ignore: sort_child_properties_last
                       child: Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(8.0),
                         child: Text(
                           'Find Route',
                           style: Theme.of(context)
                               .textTheme
                               .bodyText1
                               ?.copyWith(
-                                  color: Color.fromARGB(255, 255, 190, 59),
+                                  color:
+                                      const Color.fromARGB(255, 255, 190, 59),
                                   fontWeight: FontWeight.w800),
                         ),
                       ),
@@ -203,13 +204,13 @@ class _SearchRoutesState extends State<SearchRoutes> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        insetPadding:
-                            EdgeInsets.symmetric(horizontal: 35, vertical: 30),
+                        insetPadding: const EdgeInsets.symmetric(
+                            horizontal: 35, vertical: 30),
                       ),
                     ),
                     onChanged: (value) {
                       selectedRoute = value;
-                      print(selectedRoute);
+                      // print(selectedRoute);
                       setState(() {
                         time =
                             '${DateTime.now().hour}:${DateTime.now().minute}';
@@ -226,7 +227,7 @@ class _SearchRoutesState extends State<SearchRoutes> {
           left: 30,
           child: Text(
             time,
-            style: TextStyle(color: Colors.white, fontSize: 48),
+            style: const TextStyle(color: Colors.white, fontSize: 48),
           ),
         )
       ],

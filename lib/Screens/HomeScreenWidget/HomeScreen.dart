@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:surat_transit/Screens/HomeScreenWidget/SelectCard.dart';
-import 'package:surat_transit/getsMethod.dart';
+import 'package:surat_transit/Service/getsMethod.dart';
 
 import 'RouteScreen.dart';
 
@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size.width;
 
-    print("build Home");
+    // print("build Home");
     return Stack(children: [
       Column(
         children: [
@@ -75,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Container(
                       height: MediaQuery.of(context).size.height * 0.34,
                       decoration: BoxDecoration(
-                        color: Color.fromRGBO(35, 138, 250, 1),
+                        color: const Color.fromRGBO(35, 138, 250, 1),
                         borderRadius: BorderRadius.circular(20),
                       ),
                     ),
@@ -85,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
               SelectedCard(stations, selected_Station),
               Positioned(
                 top: MediaQuery.of(context).size.height * 0.25,
-                child: Container(
+                child: SizedBox(
                   width: 150,
                   height: 46,
                   child: OutlinedButton(
@@ -99,14 +99,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => RouteScreen(
-                              selected_Station,
-                              pr,
-                            ),
+                                selected: selected_Station, avRoute: pr),
                           ),
                         );
                       } else {
                         showSnackbar(
-                            context, Colors.black, "Enter Different Point");
+                            context,
+                            const Color.fromRGBO(35, 138, 250, 1),
+                            "Enter Different Point");
                       }
                       // print(pr[0].between_Stations);
                       // if (pr[0] != 'No') {
