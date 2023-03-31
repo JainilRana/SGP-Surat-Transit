@@ -45,7 +45,7 @@ class DetailScreen extends StatelessWidget {
                               overflow: TextOverflow.clip,
                             ),
                           ),
-                          Spacer(),
+
                           
                         ],
                       ),

@@ -103,7 +103,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                 child: Column(
                   children: [
                     Container(
-                      margin: EdgeInsets.only(top: 90),
+                      margin: EdgeInsets.only(top: 40),
                       child: SizedBox(
                         width: 370,
                         height: 550,
@@ -227,7 +227,7 @@ class Favourites extends StatelessWidget {
               height: 11,
               width: 220,
               child: GlassContainer(
-                blur: 4,
+                blur: 2,
                 child: Center(
                   child: Text(
                     title,
