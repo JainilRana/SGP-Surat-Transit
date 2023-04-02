@@ -45,12 +45,6 @@ class DetailScreen extends StatelessWidget {
                               overflow: TextOverflow.clip,
                             ),
                           ),
-<<<<<<< HEAD
-
-                          
-=======
-                          Spacer(),
->>>>>>> 631120caf3a4ce5959aba6159a74320ca551408e
                         ],
                       ),
                       const SizedBox(

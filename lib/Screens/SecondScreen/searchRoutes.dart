@@ -16,7 +16,6 @@ class SearchRoutes extends StatefulWidget {
 
 class _SearchRoutesState extends State<SearchRoutes> {
   var selectedRoute = "Select your Bus Routes";
-  String time = '${DateTime.now().hour}:${DateTime.now().minute}';
 
   late String platno;
   late String totaltime;
@@ -211,10 +210,6 @@ class _SearchRoutesState extends State<SearchRoutes> {
                     onChanged: (value) {
                       selectedRoute = value;
                       // print(selectedRoute);
-                      setState(() {
-                        time =
-                            '${DateTime.now().hour}:${DateTime.now().minute}';
-                      });
                     },
                   ),
                 ),
@@ -222,14 +217,6 @@ class _SearchRoutesState extends State<SearchRoutes> {
             ),
           ),
         ),
-        Positioned(
-          top: 80,
-          left: 30,
-          child: Text(
-            time,
-            style: const TextStyle(color: Colors.white, fontSize: 48),
-          ),
-        )
       ],
     );
   }

@@ -30,7 +30,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cupertino_icons: ^1.0.2
-  dropdown_search: ^5.0.5
+  dropdown_search: 5.0.5
   intl: ^0.18.0
   glassmorphism_ui: ^0.3.0
 
