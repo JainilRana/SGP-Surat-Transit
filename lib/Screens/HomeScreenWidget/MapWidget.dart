@@ -33,6 +33,7 @@ class MapSampleState extends State<MapSample> {
       departureTime = "",
       km = "";
   List<String> listOfStation = [];
+
   final Completer<GoogleMapController> _controller = Completer();
   final Set<Polyline> _polyline = <Polyline>{};
   final Set<Marker> _marker = <Marker>{};
@@ -96,10 +97,14 @@ class MapSampleState extends State<MapSample> {
         direction['start_location'],
         direction['end_location']
       ];
+      // direction['overviewpolyline']
+      List<List<PointLatLng>> tlist =
+          RouteSteps().getTransitPol(direction['steps']);
+
       markerS.insertAll(1, mlist);
       setState(() {
         _setMarker(markerS);
-        _setPolyline(direction['overviewpolyline']);
+        _setPolyline(tlist);
       });
     } catch (e) {
       print(e);
@@ -111,7 +116,7 @@ class MapSampleState extends State<MapSample> {
       final String markerIdVal = 'polyline_$_markerIdCounter';
       _markerIdCounter++;
       // print(element);
-      if (element == 1) {
+      if (element == m.length - 1) {
         _marker.add(
           Marker(
               markerId: MarkerId(markerIdVal),
@@ -119,6 +124,7 @@ class MapSampleState extends State<MapSample> {
               infoWindow: InfoWindow(title: end)),
         );
       }
+      print(end);
       _marker.add(
         Marker(
           markerId: MarkerId(markerIdVal),
@@ -129,19 +135,21 @@ class MapSampleState extends State<MapSample> {
     // print(_marker.length);
   }
 
-  void _setPolyline(List<PointLatLng> points) {
-    final String polylineIdVal = 'polyline_$_polylineIdCounter';
-    _polylineIdCounter++;
-    _polyline.add(Polyline(
-      polylineId: PolylineId(polylineIdVal),
-      width: 6,
-      color: const Color.fromARGB(255, 33, 226, 243),
-      points: points
-          .map(
-            (point) => LatLng(point.latitude, point.longitude),
-          )
-          .toList(),
-    ));
+  void _setPolyline(List<List<PointLatLng>> points) {
+    for (var element in points) {
+      final String polylineIdVal = 'polyline_$_polylineIdCounter';
+      _polylineIdCounter++;
+      _polyline.add(Polyline(
+        polylineId: PolylineId(polylineIdVal),
+        width: 6,
+        color: const Color.fromARGB(255, 207, 96, 255),
+        points: element
+            .map(
+              (point) => LatLng(point.latitude, point.longitude),
+            )
+            .toList(),
+      ));
+    }
   }
 
   static const CameraPosition _kGooglePlex =

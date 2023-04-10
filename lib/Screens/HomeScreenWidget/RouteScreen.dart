@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'MapWidget.dart';
 
 class RouteScreen extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
   final selected;
   final List avRoute;
 
@@ -17,7 +18,6 @@ class _RouteScreenState extends State<RouteScreen> {
   late List avRoute;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     selected_stations = widget.selected;
     avRoute = widget.avRoute;

@@ -17,9 +17,7 @@ class _FullDetailsState extends State<FullDetails> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print(widget.index);
     listOfStation = widget.avRoute[widget.index].between_Stations;
-    print(widget.avRoute[widget.index].between_Stations);
   }
 
   @override

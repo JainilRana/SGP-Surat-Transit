@@ -1,3 +1,4 @@
+// ignore: file_names
 class ModelObject {
   List<SACHINGIDCJUNCTIONUDHANADARWAJA11>? sACHINGIDCJUNCTIONUDHANADARWAJA11;
   List<UDHANADARWAJASACHINGIDCJUNCTION11>? uDHANADARWAJASACHINGIDCJUNCTION11;
@@ -1413,7 +1414,6 @@ class BHESTANGARDENTOKHARWARNAGAR315 {
     stopNames = json['Stop Names'];
     travelTimeHhMmSs = json['Travel Time (hh:mm:ss)'];
     platformNo = json['PlatformNo;'];
-    print(json['PlatformNo;']);
   }
 }
 

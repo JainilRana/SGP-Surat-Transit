@@ -20,11 +20,11 @@ class _HomeScreenState extends State<HomeScreen> {
   List<String?> stations = [];
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     stations = GetMethod().getListAll();
   }
 
+  // ignore: non_constant_identifier_names
   var selected_Station = ["Select Location..", "To.."];
 
   @override

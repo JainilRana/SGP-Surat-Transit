@@ -1,5 +1,8 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:surat_transit/Screens/ExploreScreen/ThirdScreen.dart';
+import 'package:surat_transit/Service/getsMethod.dart';
 
 import 'HomeScreenWidget/HomeScreen.dart';
 import 'SecondScreen/searchRoutes.dart';
@@ -16,27 +19,23 @@ class _CustomNavigationState extends State<CustomNavigation> {
   static final List<Widget> _screens = [
     const HomeScreen(),
     const SearchRoutes(),
-    ExploreScreen(),
   ];
   void _onTapped(int index) {
     setState(() {
       selectedindex = index;
     });
-    print(selectedindex);
   }
 
   @override
   Widget build(BuildContext context) {
-    print('Build Navigation');
     return Scaffold(
+      extendBody: selectedindex == 2 ? true : false,
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
-      // appBar: AppBar(
-      //   elevation: 0,
-      //   backgroundColor: Colors.transparent,
-      // ),
-      body: _screens.elementAt(selectedindex),
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      body: selectedindex < 2
+          ? _screens.elementAt(selectedindex)
+          : const SizedBox(),
       bottomNavigationBar: Card(
         elevation: 20,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -45,22 +44,21 @@ class _CustomNavigationState extends State<CustomNavigation> {
           child: BottomNavigationBar(
               currentIndex: selectedindex,
               onTap: _onTapped,
-              // elevation: 10,
               backgroundColor: Colors.white,
               showUnselectedLabels: false,
               showSelectedLabels: false,
-              selectedItemColor: Color.fromRGBO(35, 138, 250, 1),
+              selectedItemColor: const Color.fromRGBO(35, 138, 250, 1),
               unselectedItemColor: Colors.black45,
               type: BottomNavigationBarType.fixed,
               iconSize: 30,
-              items: const [
-                BottomNavigationBarItem(
+              items: [
+                const BottomNavigationBarItem(
                     icon: Icon(Icons.route_rounded),
                     label: "Routs",
                     activeIcon: Icon(
                       Icons.route_outlined,
                     )),
-                BottomNavigationBarItem(
+                const BottomNavigationBarItem(
                   icon: ImageIcon(
                     AssetImage('assets/images/edit.png'),
                     size: 42,
@@ -73,12 +71,17 @@ class _CustomNavigationState extends State<CustomNavigation> {
                   ),
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.explore_outlined),
+                  icon: GestureDetector(
+                      onTap: () => nextScreen(context, const ExploreScreen()),
+                      child: const Icon(Icons.explore_outlined)),
                   label: "Explore",
-                  activeIcon: Icon(
-                    Icons.explore_outlined,
-                    color: Color.fromARGB(255, 55, 52, 52),
-                    size: 32,
+                  activeIcon: GestureDetector(
+                    onTap: () => nextScreen(context, const ExploreScreen()),
+                    child: const Icon(
+                      Icons.explore_outlined,
+                      color: Color.fromARGB(255, 55, 52, 52),
+                      size: 32,
+                    ),
                   ),
                 )
               ]),

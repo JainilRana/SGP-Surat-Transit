@@ -39,11 +39,11 @@ class TransitRoute {
     } catch (e) {
       print('21-$e');
     }
-    print('42:${result['steps']}');
+    // print('42:${result['steps']}');
     return result;
   }
 }
-
+  
 
 
  // Future<String> getPlaceId(String input) async {

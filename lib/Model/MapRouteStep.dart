@@ -1,3 +1,5 @@
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+
 class RouteSteps {
   List<Map<String, dynamic>> getpoints(List<dynamic> steps) {
     List<Map<String, dynamic>> point = [];
@@ -19,5 +21,18 @@ class RouteSteps {
       info.add(element['html_instructions']);
     }
     return info;
+  }
+
+  List<List<PointLatLng>> getTransitPol(List<dynamic> r) {
+    List<List<PointLatLng>> h = [];
+    for (var element in r) {
+      // List<PointLatLng> g = [];
+      if (element['travel_mode'] == 'TRANSIT') {
+        h.add(
+          PolylinePoints().decodePolyline(element['polyline']['points']),
+        );
+      }
+    }
+    return h;
   }
 }
